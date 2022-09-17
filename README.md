@@ -9,7 +9,7 @@ utilizzerà il sistema per consultare il proprio piano di studi e gestire le pre
 OPERAZIONI NECESSARIE PRIMA DI ESEGUIRE L'APPLICAZIONE:
 Creare un database utilizzando il file unieasy.sql fornito.
 Modificare le credenziali per l'accesso al DB nella classe "MyConnection":
-- url = "jdbc:mysql://localhost/nomeDB"
+- url = "jdbc:postgresql://localhost/nomeDB"
 - user = "UsernameScelto"
 - password = "passwordScelta"
 
