@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+
 public class AppelliDocente extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
@@ -65,6 +66,29 @@ public class AppelliDocente extends JPanel{
 		}
 		
 		return appelli;
+		
+	}
+	
+	public boolean cancellaAppello(String cod_ap) {
+		
+		boolean retval = false;
+		
+		String queryDel = "DELETE FROM prenotazione WHERE cod_appello = '" + cod_ap + "';";
+		String query2 = "DELETE FROM appello WHERE codice_app =  '" + cod_ap + "' ;";
+		
+		try{
+			
+			Statement ps = MyConnection.getConnection().createStatement(); 
+
+			ps.executeUpdate(queryDel);
+			ps.executeUpdate(query2);	
+			retval = true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return retval;
 		
 	}
 	
@@ -123,7 +147,7 @@ public class AppelliDocente extends JPanel{
 	}
 	
 	
-	public JPanel visualizzaSingoloAppello(final Appello ap, String username) {
+	public JPanel visualizzaSingoloAppello(final Appello ap, final String username) {
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -138,6 +162,8 @@ public class AppelliDocente extends JPanel{
 		JPanel operazioni = new JPanel();
 	
 		JButton visualizza = new JButton("Vedi");
+		JButton modifica = new JButton("Modifica");
+		JButton cancella = new JButton("Canc");
 		
 		codMateria.setMaximumSize(d3); 			codMateria.setMinimumSize(d3); 			codMateria.setPreferredSize(d3);
 		nome.setMaximumSize(d1); 				nome.setMinimumSize(d1)	;	 			nome.setPreferredSize(d1);
@@ -182,7 +208,11 @@ public class AppelliDocente extends JPanel{
 		
 		operazioni.add(visualizza);
 		operazioni.add(Box.createHorizontalStrut(w));
-					
+		operazioni.add(modifica);
+		operazioni.add(Box.createHorizontalStrut(w));
+		operazioni.add(cancella);
+		operazioni.add(Box.createHorizontalStrut(w));
+								
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 	
@@ -214,17 +244,50 @@ public class AppelliDocente extends JPanel{
 			}
 		});
 		
+		modifica.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				AppelloModificato appelloModificato = new AppelloModificato();
+				appelloModificato.modificaAppelloSwing(ap, mat, username);
+				
+			}
+		});
+		
+		
+		cancella.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {	
+				
+				Messaggio mess = new Messaggio();			
+				boolean retval;
+				
+				retval = cancellaAppello(ap.getCodice());
+				
+				if(retval)
+					mess.generaMessaggio("Appello " + ap.getCodice() + " cancellato.");
+				
+				visualizzaElencoAppelliDocente(username);
+				
+			}
+		});
+		
 		
 		return complessivo;
 		
 	}
 	
 	
-	public void visualizzaElencoAppelliDocente(String username) {
+	public void visualizzaElencoAppelliDocente(final String username) {
 		
 		
 		JPanel complessivo = new JPanel();
 		JPanel appelliPanel = new JPanel();
+		JPanel pulsanti = new JPanel();
+		JButton aggiungiAppello = new JButton("Nuovo Appello");
+		
+		pulsanti.add(aggiungiAppello);
 		
 		appelliPanel.setLayout(new BoxLayout(appelliPanel, BoxLayout.Y_AXIS));
 		
@@ -244,6 +307,18 @@ public class AppelliDocente extends JPanel{
 		complessivo.add(Box.createVerticalStrut(h));
 		complessivo.add(appelliPanel);
 		complessivo.add(Box.createVerticalStrut(h));
+		complessivo.add(pulsanti);
+		
+		aggiungiAppello.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				NuovoAppello newAppello = new NuovoAppello();		
+				newAppello.inserimentoNuovoAppello(username);
+				
+			}
+		});
 		
 		InterfPrincipale.setCenterPanel(complessivo);
 		
