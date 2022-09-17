@@ -3,6 +3,8 @@ package com.mygroup.app.UniEasy;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,9 +12,11 @@ import java.util.LinkedList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
 
 public class IscrittiAppello {
 	
@@ -124,7 +128,7 @@ public class IscrittiAppello {
 	}
 	
 	
-	public JPanel dettagliStudente(Studente stud, Materia mat, Appello ap) {
+	public JPanel dettagliStudente(final Studente stud, final Materia mat, final Appello ap) {
 		
 		JLabel tmp = new JLabel();
 		JPanel matricola = new JPanel();	
@@ -133,6 +137,7 @@ public class IscrittiAppello {
 		JPanel email = new JPanel();
 		JPanel telefono = new JPanel();
 		
+		JButton registra = new JButton("Registra");
 		
 		JPanel complex = new JPanel();
 		
@@ -180,9 +185,21 @@ public class IscrittiAppello {
 		complex.add(Box.createHorizontalStrut(w));
 		complex.add(telefono);
 		complex.add(Box.createHorizontalStrut(w));
+		complex.add(registra);
+		complex.add(Box.createHorizontalStrut(w));
 		
 		complex.setBorder(new LineBorder(Color.black, 1));
 		
+		registra.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				RegistrazioneEsame registrEsame = new RegistrazioneEsame();		
+				registrEsame.visualizzaRegistrazioneEsame(stud, ap, mat);
+				
+			}
+		});
 		
 		return complex;
 		
