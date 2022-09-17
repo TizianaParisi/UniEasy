@@ -16,7 +16,5 @@ class MyConnectionTest {
 			assertEquals(result != null, true);
 			
 	    }
-	    
-	
 
 }
