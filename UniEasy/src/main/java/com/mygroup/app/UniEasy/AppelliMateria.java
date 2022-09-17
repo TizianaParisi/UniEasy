@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -13,11 +15,13 @@ import java.util.LinkedList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
 
 public class AppelliMateria extends JFrame{
 	
@@ -97,6 +101,39 @@ public class AppelliMateria extends JFrame{
 		
 	}
 	
+public boolean inserisciPrenotazione(String codAp, String matricola) {
+		
+		boolean resp = false;
+		java.sql.Date oggi = new java.sql.Date(System.currentTimeMillis());
+		
+		String queryVerificaEsistenza  = "SELECT * FROM prenotazione WHERE mat_studente = '" + matricola +"' AND cod_appello = '" + codAp + "' ;";
+		
+		try{
+			
+			Statement ps = MyConnection.getConnection().createStatement(); 
+			ResultSet res = ps.executeQuery(queryVerificaEsistenza);
+			
+			if(res.next()){
+				
+				resp = false;
+				
+			} else {
+				
+				String query = "INSERT INTO prenotazione (cod_appello, mat_studente, data) VALUES ('"+ codAp + "','" + matricola + "','" + oggi + "');";
+				ps.executeUpdate(query);
+				resp = true;
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+		return resp;
+		
+	}
+	
 	
 	public static JPanel getIntestazione(){
 		
@@ -105,8 +142,9 @@ public class AppelliMateria extends JFrame{
 		JPanel aula = new JPanel();
 		JPanel nIscr = new JPanel();
 		JPanel tipo = new JPanel();
-		
+		JPanel pulsante = new JPanel();
 		JPanel intest = new JPanel();
+		
 		
 		data.setMaximumSize(d2); 		data.setPreferredSize(d2); 		data.setMinimumSize(d2);
 		nIscr.setMaximumSize(d3); 		nIscr.setPreferredSize(d3); 	nIscr.setMinimumSize(d3);
@@ -133,6 +171,11 @@ public class AppelliMateria extends JFrame{
 		tmp.setText("Aula");
 		aula.add(tmp);
 		
+		tmp = new JLabel();
+		tmp.setFont(fontIntest);
+		tmp.setText("Operazioni");
+		pulsante.add(tmp);
+		
 		
 		intest.add(Box.createHorizontalStrut(w));
 		intest.add(data);
@@ -143,6 +186,8 @@ public class AppelliMateria extends JFrame{
 		intest.add(nIscr);
 		intest.add(Box.createHorizontalStrut(w));
 		intest.add(tipo);
+		intest.add(Box.createHorizontalStrut(w));
+		intest.add(pulsante);
 		
 		intest.setLayout(new BoxLayout(intest, BoxLayout.X_AXIS));
 		
@@ -160,6 +205,8 @@ public class AppelliMateria extends JFrame{
 		JPanel nIscr = new JPanel();
 		JPanel tipo = new JPanel();
 		JPanel aula = new JPanel();
+		JPanel pulsante = new JPanel();
+		JButton prenota = new JButton("Prenota");
 		
 		data.setMaximumSize(d2); 		data.setPreferredSize(d2); 		data.setMinimumSize(d2);
 		nIscr.setMaximumSize(d3); 		nIscr.setPreferredSize(d3); 	nIscr.setMinimumSize(d3);
@@ -201,12 +248,28 @@ public class AppelliMateria extends JFrame{
 		complessivo.add(Box.createHorizontalStrut(w));
 		complessivo.add(tipo);
 		complessivo.add(Box.createHorizontalStrut(w));
+		complessivo.add(pulsante);
 		
 		complessivo.setLayout(new BoxLayout(complessivo, BoxLayout.X_AXIS));
 
 		complessivo.setBorder(new LineBorder(Color.BLACK, 1));
 
-		
+		prenota.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				boolean resp = false;
+				Messaggio messaggio = new Messaggio();
+				
+				resp = inserisciPrenotazione(ap.getCodice(), matricola);
+				
+				if(resp)
+					messaggio.generaMessaggio("Prenotazione Effettuata!");
+				else
+					messaggio.generaMessaggio("Impossibile Effettuare la prenotazione: Prenotazione esistente!");
+				
+			}
+		});
 		
 		return complessivo;
 		
