@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -12,6 +14,7 @@ import java.util.LinkedList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -69,6 +72,32 @@ public class PrenotazioneStudente{
 		}
 	
 		return listaPrenApp;
+		
+	}
+	
+	public boolean cancellaPrenotazione(Prenotazione pren) {
+		
+		boolean resp = false;
+		
+		String codApp = pren.getCodAppello();
+		String matrStud = pren.getMatStudente();
+		
+		String query = "DELETE FROM prenotazione WHERE cod_appello =  '" + codApp + "' AND mat_studente = '" + matrStud + "';";		
+		
+		try{
+			
+			Statement ps = MyConnection.getConnection().createStatement(); 
+			ps.executeUpdate(query);
+
+			resp = true;
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
+		
+		return resp;
 		
 	}
 	
@@ -135,6 +164,8 @@ public class PrenotazioneStudente{
 		JPanel tipo = new JPanel();
 		JPanel operazioni = new JPanel();
 		
+		JButton cancella = new JButton("Cancella");
+		operazioni.add(cancella);
 		
 		nome_materia.setMaximumSize(d3);		nome_materia.setMinimumSize(d3);		nome_materia.setPreferredSize(d3);
 		data_app.setMaximumSize(d1);		data_app.setMinimumSize(d1);		data_app.setPreferredSize(d1);
@@ -180,6 +211,25 @@ public class PrenotazioneStudente{
 		
 		complessivo.setBorder(new LineBorder(Color.BLACK, 1));
 
+		cancella.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				boolean resp = false;
+				Messaggio mess = new Messaggio();
+				
+				resp = cancellaPrenotazione(prenotazione);
+
+				if(resp)
+					mess.generaMessaggio("Prenotazione cancellata!");
+				else
+					mess.generaMessaggio("Impossibile cancellare la prenotazione.");
+				
+				PrenotazioneStudente pr = new PrenotazioneStudente();
+				pr.visualizzaPrenotazioni(prenotazione.getMatStudente());
+				
+			}
+		});
 		
 		return complessivo;
 		
