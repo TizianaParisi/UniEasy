@@ -231,6 +231,7 @@ public class AppelliMateria extends JFrame{
 		tmp.setText(ap.getTipo());
 		tipo.add(tmp);
 		
+		pulsante.add(prenota);
 		
 		tmp = new JLabel();
 		tmp.setFont(fontValue);

@@ -9,8 +9,6 @@ public class App {
 		InterfPrincipale finestra = new InterfPrincipale();
 		finestra.add(login.loginComponent());	
 		
-		
-		
 	}
 
 }
