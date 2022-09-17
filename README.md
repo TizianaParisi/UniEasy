@@ -19,11 +19,32 @@ DATABASE
 Per lo store dei dati che riguardano gli studenti, i docenti, gli appelli fissati, il corso a cui lo studente è iscritto, 
 gli esami sostenuti dallo studente, le prenotazioni ad appelli e le materie che comprende il corso,
 viene utilizzato un database SQL con sette tabelle:
--appello
--corso
--docente
--studente
--esame
--materia
--prenotazione
+- appello
+
+![appello](https://user-images.githubusercontent.com/110738908/190869528-f77971b3-8e11-4909-a2b7-83fdcd5a5ece.png)
+
+- corso
+
+![corso](https://user-images.githubusercontent.com/110738908/190869554-f3652510-65db-4c37-8383-a6f97e6478cd.png)
+
+- docente
+
+![docente](https://user-images.githubusercontent.com/110738908/190869565-a6e537de-e472-43f3-bcef-18f3550f03ff.png)
+
+- studente
+
+![studente](https://user-images.githubusercontent.com/110738908/190869577-61df594c-c53e-49a1-8f46-f6cf1c3b7409.png)
+
+- esame
+
+![esame](https://user-images.githubusercontent.com/110738908/190869587-bd909b83-f8a1-406e-a2cf-1b3e5a351fd3.png)
+
+- materia
+
+![materia](https://user-images.githubusercontent.com/110738908/190869598-ce33a8ae-8cb8-4dc8-a095-213f4c6951e1.png)
+
+- prenotazione
+
+![prenotazione](https://user-images.githubusercontent.com/110738908/190869602-e6939121-a4f9-441a-8b53-0fc5eb48a306.png)
+
 
