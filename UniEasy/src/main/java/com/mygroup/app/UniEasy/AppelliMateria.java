@@ -101,7 +101,7 @@ public class AppelliMateria extends JFrame{
 		
 	}
 	
-public boolean inserisciPrenotazione(String codAp, String matricola) {
+	public boolean inserisciPrenotazione(String codAp, String matricola) {
 		
 		boolean resp = false;
 		java.sql.Date oggi = new java.sql.Date(System.currentTimeMillis());
