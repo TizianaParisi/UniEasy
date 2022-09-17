@@ -58,8 +58,7 @@ class ModificaUtenteTest {
 	// Test del metodo modificaDatiProfiloStudente che verifica il caso in cui, con dati inseriti corretti, l'aggiornamento dei dati dello studente 
 	// cambia le informazioni precedenti
 	@Test
-	void whenDatiCorretti_expectStudenteModificato() {
-		
+	void whenDatiCorretti_expectStudenteModificato() {		
 		
 		Studente stud = mock(Studente.class);
 		String newEmail = "testcorret1@test.it";
@@ -105,6 +104,5 @@ class ModificaUtenteTest {
 		assertEquals(modifica.modificaDatiProfiloStudente(stud, newEmail, newTel, newPass).getTelefono(), stud.getTelefono());
 	
 	}
-	
 	
 }
