@@ -70,6 +70,20 @@ class AppelliDocenteTest {
 		
 	}
 	
+	// Test del metodo cancellaAppello che verifica se la cancellazione dell'appello ha avuto esito positivo
+	
+	@Test
+		void cancellaAppelloTest() {
+			
+			AppelliDocente appelliDoc = new AppelliDocente();
+			Appello appello = mock(Appello.class);
+				
+			when(appello.getCodice()).thenReturn("00000000");
+			
+			assertTrue(appelliDoc.cancellaAppello(appello.getCodice()));
+			
+		}
+	
 	// Test del metodo caricaMateriaDiAppello per verificare che venga restituita la materia relativa all'appello	
 	@Test
 	void whenOttieniMateriaAppelloTest_expectMateriaDiAppello() {
