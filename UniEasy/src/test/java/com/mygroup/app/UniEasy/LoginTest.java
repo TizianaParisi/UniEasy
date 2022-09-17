@@ -77,7 +77,7 @@ class LoginTest {
 	
 	// Test (con dati NON presenti nel DB) che verifica se l'username e la password per l'utente "Studente" permettono l'autenticazione dello Studente
 	@Test
-	void whenDatiStudentrNonInDB_expectStudenteNonVerificato(){
+	void whenDatiStudenteNonInDB_expectStudenteNonVerificato(){
 		
 		Login login = new Login();
 		String utente = new String("Studente");
