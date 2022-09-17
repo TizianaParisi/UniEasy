@@ -1,6 +1,8 @@
 package com.mygroup.app.UniEasy;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,6 +10,7 @@ import java.sql.Statement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 class PrenotazioneStudenteTest {
 
@@ -60,6 +63,20 @@ class PrenotazioneStudenteTest {
 		assertEquals(2, prenStud.ottieniPrenotazioniStudente("222222").size());
 		
 	}
+	
+	// test per verificare che la rimozione della prenotazione ha avuto successo
+	@Test
+		void cancellaPrenotazione() {
+			
+			Prenotazione prenotazione = mock(Prenotazione.class);
+			PrenotazioneStudente prenStud = new PrenotazioneStudente();
+			
+			when(prenotazione.getCodAppello()).thenReturn("00000010");
+			when(prenotazione.getMatStudente()).thenReturn("222222");
+			
+			assertTrue(prenStud.cancellaPrenotazione(prenotazione));
+					
+		}
 	
 	
 	// rimozione dati di test dal DB
